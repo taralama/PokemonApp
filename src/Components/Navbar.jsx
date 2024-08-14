@@ -30,7 +30,7 @@ const Navbar = () => {
             {renderLink('/battle', 'Battle')}
             {renderLink('/history', 'History')}
             {renderLink('/pokedex', 'Pokedex')}
-            {renderLink('/about', 'About')}
+            {renderLink('#', 'About')}
           </ul>
         </div>
       </div>
