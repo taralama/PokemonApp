@@ -31,7 +31,7 @@ const Pokedex = () => {
 
           
           setData(detailedPokemonData)
-          console.log(detailedPokemonData);
+          
           
           
         } catch (error) {
@@ -128,7 +128,7 @@ const Pokedex = () => {
   ) : (
     filteredData?.map((item, index) => (
       <div key={index} className="h-72 lg:w-52 bg-white p-2 mt-2 flex flex-col justify-center border-4 border-lightBlue rounded-xl">
-        {console.log(item)}
+        
         <img className="h-48" src={item.sprites.front_default} alt={item.name} />
         <h1 className="flex justify-center mt-1">{item.name}</h1>
         <p className="flex justify-center">{item.types[0].type.name}</p>
