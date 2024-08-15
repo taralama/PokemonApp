@@ -12,7 +12,10 @@ export default {
         customBlue:'#2C72B8',
         lightBlue:'#9ACDFF',
         historyBlue: '#3383D2',
-        borderBlue:'#9ACDFF'
+        borderBlue:'#9ACDFF',
+        defeatBlue:' #2C72B8CC',
+        
+
         
       },
       fontFamily: {
