@@ -19,7 +19,6 @@ const Battle = () => {
   const [selectedPoke2, setSelectedPoke2] = useState("charmeleon");
   const [detailDataPoke2, setDetailDataPoke2] = useState({});
   const [battleResult,setBattleResult] = useState({Win:'',Loss:''})
-  const [history,setHistory] = useState([])
 
   const fetchData = async () => {
     const response = await axios.get(
@@ -164,7 +163,7 @@ const Battle = () => {
                     return (
                       <>
                         {
-                          <tr>
+                          <tr key={index}>
                             <td>{item.move.name}</td>
                           </tr>
                         }
