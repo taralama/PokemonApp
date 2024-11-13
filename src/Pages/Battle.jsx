@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import vs from "../Images/Battle/VsIcon.png";
-import Bulbsour from "../Images/Battle/image5.png";
 import ball from "../Images/Battle/Pokeball.png";
-import tail from "../Images/Battle/Trailing.png";
 import winner from "../Images/Battle/Winner.png";
 import axios from "axios";
 import { useDispatch } from 'react-redux'
@@ -20,7 +18,6 @@ const Battle = () => {
   const [detailDataPoke1, setDetailDataPoke1] = useState({});
   const [selectedPoke2, setSelectedPoke2] = useState("charmeleon");
   const [detailDataPoke2, setDetailDataPoke2] = useState({});
-  const [detailData, setDetailData] = useState([]);
   const [battleResult,setBattleResult] = useState({Win:'',Loss:''})
   const [history,setHistory] = useState([])
 
