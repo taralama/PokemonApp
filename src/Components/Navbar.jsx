@@ -1,4 +1,3 @@
-import React from "react";
 import logo from "../Images/Homepage/PokemonLogo.png";
 import ball from '../Images/Battle/Pokeball.png';
 import { Link, useLocation } from "react-router-dom";

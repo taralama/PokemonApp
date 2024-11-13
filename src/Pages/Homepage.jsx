@@ -1,4 +1,3 @@
-import React from "react";
 
 import dragon from '../Images/Homepage/image11.png'
 import '../index.css'

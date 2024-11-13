@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import ball from "../Images/Battle/Pokeball.png";
 import tail from "../Images/Battle/Trailing.png";
@@ -11,7 +11,6 @@ import { RingLoader } from "react-spinners";
 const Pokedex = () => {
 
   const [data,setData] = useState([]);
-  const [pokeName,setPokename] = useState();
   const [load,setLoad] = useState(true)
   const [searchPara,setSearchPara] = useState({Name: '',Type: ''})
 
