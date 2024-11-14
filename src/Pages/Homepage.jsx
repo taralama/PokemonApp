@@ -1,15 +1,13 @@
 
 import dragon from '../Images/Homepage/image11.png'
 import '../index.css'
-import Navbar from "../Components/Navbar";
 import { useNavigate } from "react-router-dom";
 const Homepage = () => {
   const navigate = useNavigate();
 
   return (
     <>
-      <div className="md:h-screen xl:h-screen lg:w-screen bg-customBlue    text-white pt-8 ">
-        <Navbar/>
+
         <div className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-2 sm:gap-6 md:gap-1 xl:gap-96   p-10 ">
           <div className=" p-5 items-center content-center">
             <h2 className="text-4xl font-kanit">Welcome to </h2>
@@ -29,7 +27,6 @@ const Homepage = () => {
             <img  className=" sm:h-72 lg:h-96" src={dragon} alt="" />
           </div>
         </div>
-      </div>
     </>
   );
 };

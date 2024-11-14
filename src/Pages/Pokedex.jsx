@@ -1,62 +1,80 @@
-import  { useEffect, useState } from "react";
-import Navbar from "../Components/Navbar";
+import {  useState } from "react";
 import ball from "../Images/Battle/Pokeball.png";
 import tail from "../Images/Battle/Trailing.png";
 import searchIcon from "../Images/Pokedex/search.png";
-import line from '../Images/Pokedex/Line.png'
+import line from "../Images/Pokedex/Line.png";
 
 import axios from "axios";
 import { RingLoader } from "react-spinners";
+import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
+import { UserContext } from "../Components/Context/UserProvider";
 
 const Pokedex = () => {
+  const { user, setUser } = useContext(UserContext);
+  const stored = localStorage.getItem('users')
+  stored.username ? setUser(setUser(stored.username)):
+  console.log('Welcome',user.username)
 
-  const [data,setData] = useState([]);
-  const [load,setLoad] = useState(true)
-  const [searchPara,setSearchPara] = useState({Name: '',Type: ''})
+  // useEffect(()=>{
+  //   setUser(JSON.parse(localStorage.getItem('users')))
+  // console.log('hello!'+user.username)
+  // },[setUser,user])
 
-  useEffect(()=>{
-    const fetchData = async() =>{
-      try {
-        const results = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=100`)
-        
-        const response = results.data.results
-        // console.log(response.data.results);
+  const [resdata, setData] = useState([]); // with the help of query this is not used thats the adantage
+  const [load, setLoad] = useState(true); // with the help of query this is not used thats the adantage
+  const [searchPara, setSearchPara] = useState({ Name: "", Type: "" });
 
-        const detailedPokemonData = await Promise.all(
-          response.map(async (pokemon) => {
-            const pokemonDetails = await axios.get(pokemon.url);
-            return pokemonDetails.data;
-          }))
+  // const fetchData = async() =>{
+  //   try {
 
-          
-          setData(detailedPokemonData)
-          
-          
-          
-        } catch (error) {
-          console.log(error);
-          
-        }finally{
-        setLoad(false)
+  //     } catch (error) {
+  //       console.log(error);
 
-      }
-    }
+  //     }finally{
+  //     setLoad(false)
 
-    fetchData();
-  },[])
+  //   }
+  // }
 
-  const filteredData = data.filter(item =>{
-    return (searchPara.Name ? item.name.includes(searchPara.Name): true) &&
-    (searchPara.Type ? item.types[0].type.name.includes(searchPara.Type): true)
-  })
+  const { data } = useQuery({
+    queryKey: "users",
+    queryFn: async () => {
+      const results = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon?limit=100`
+      );
 
+      const response = results.data.results;
+      // console.log(response.data.results);
 
+      const detailedPokemonData = await Promise.all(
+        response.map(async (pokemon) => {
+          const pokemonDetails = await axios.get(pokemon.url);
+          return pokemonDetails.data;
+        })
+      );
 
+      // setData(detailedPokemonData)
+      return detailedPokemonData;
+    },
+  });
+  console.log(data);
+  // setData(data)
+  // setLoad(!isSuccess)
+  // if(error) console.log(error)
+  // if(isSuccess) return console.log(isSuccess)
 
+  const filteredData = data?.filter((item) => {
+    return (
+      (searchPara.Name ? item.name.includes(searchPara.Name) : true) &&
+      (searchPara.Type
+        ? item.types[0].type.name.includes(searchPara.Type)
+        : true)
+    );
+  });
 
   return (
     <div className=" h-fullheight bg-customBlue    text-white pt-8 ">
-      <Navbar />
       <div className="mt-5 mx-10 flex items-end">
         <h1 className="text-3xl font-kanit">Pokedex</h1>
         <p className="text-lightBlue ml-1 font-kanit">(450 pokemons)</p>
@@ -73,8 +91,8 @@ const Pokedex = () => {
               className=" w-72 ml-1 text-gray-500 font-kanit pl-2 border-l border-r-2 focus:outline-none  "
               type="text"
               placeholder="Your pokemon"
-              onChange={(event)=>{
-                setSearchPara({...searchPara,Name:event.target.value})
+              onChange={(event) => {
+                setSearchPara({ ...searchPara, Name: event.target.value });
               }}
             />
             <img className=" h-10 p-2" src={searchIcon} alt="" />
@@ -89,8 +107,8 @@ const Pokedex = () => {
               className=" w-72 ml-1 text-gray-500 font-kanit pl-2 border-l border-r-2 focus:outline-none  "
               type="text"
               placeholder="All"
-              onChange={(event)=>{
-                setSearchPara({...searchPara,Type: event.target.value})
+              onChange={(event) => {
+                setSearchPara({ ...searchPara, Type: event.target.value });
               }}
             />
             <img className="h-10" src={tail} alt="" />
@@ -105,7 +123,6 @@ const Pokedex = () => {
               className=" w-72 ml-1 text-gray-500 font-kanit pl-2 border-l border-r-2 focus:outline-none  "
               type="text"
               placeholder="A-Z"
-              
             />
             <img className="h-10" src={tail} alt="" />
           </div>
@@ -117,33 +134,31 @@ const Pokedex = () => {
         <img src={line} alt="" />
       </div>
 
+      {/* list of pokemon */}
 
-    {/* list of pokemon */}
-    
-        <div className=" p-10 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 text-black font-kanit">
-        {
-  load ? (
-    <div className="flex relative justify-center"><RingLoader color="white"  /></div>
-  ) : (
-    filteredData?.map((item, index) => (
-      <div key={index} className="h-72 lg:w-52 bg-white p-2 mt-2 flex flex-col justify-center border-4 border-lightBlue rounded-xl">
-        
-        <img className="h-48" src={item.sprites.front_default} alt={item.name} />
-        <h1 className="flex justify-center mt-1">{item.name}</h1>
-        <p className="flex justify-center">{item.types[0].type.name}</p>
+      <div className=" p-10 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 text-black font-kanit">
+        {!data ? (
+          <div className="flex relative justify-center">
+            <RingLoader color="white" />
+          </div>
+        ) : (
+          filteredData?.map((item, index) => (
+            <div
+              key={index}
+              className="h-72 lg:w-52 bg-white p-2 mt-2 flex flex-col justify-center border-4 border-lightBlue rounded-xl"
+            >
+              {/* {console.log(item)} */}
+              <img
+                className="h-48"
+                src={item.sprites.front_default}
+                alt={item.name}
+              />
+              <h1 className="flex justify-center mt-1">{item.name}</h1>
+              <p className="flex justify-center">{item.types[0].type.name}</p>
+            </div>
+          ))
+        )}
       </div>
-    ))
-  )
-}
-   
-      </div>
-      
-    
-    
-
-
-
-
     </div>
   );
 };

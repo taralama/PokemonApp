@@ -1,4 +1,3 @@
-import Navbar from "../Components/Navbar";
 import bird from "../Images/History/bird.png";
 import vs from "../Images/Battle/VsIcon.png";
 import ninetale from "../Images/History/Ninetales.png";
@@ -13,7 +12,7 @@ const History = () => {
   return (
     <>
       <div className=" h-full bg-customBlue    text-white pt-8 ">
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="mt-5 mx-10 flex items-end">
           <h1 className="text-3xl font-kanit">Battle History</h1>
           <p className="text-lightBlue ml-1 font-kanit">

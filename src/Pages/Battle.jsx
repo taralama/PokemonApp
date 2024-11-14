@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Navbar from "../Components/Navbar";
 import vs from "../Images/Battle/VsIcon.png";
 import ball from "../Images/Battle/Pokeball.png";
 import winner from "../Images/Battle/Winner.png";
@@ -104,8 +103,8 @@ const Battle = () => {
 
   return (
     <>
-      <div className=" h-110vh bg-customBlue    text-white pt-8 ">
-        <Navbar />
+      {/* <div className=" h-110vh bg-customBlue    text-white pt-8 "> */}
+        {/* <Navbar /> */}
         <div className="flex justify-center mt-2">
           <p className="font-kanit text-3xl">Let the Battle Begin</p>
         </div>
@@ -250,7 +249,7 @@ const Battle = () => {
             Start Battle
           </button>
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };
