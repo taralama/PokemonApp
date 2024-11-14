@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import ball from "../Images/Battle/Pokeball.png";
 import tail from "../Images/Battle/Trailing.png";
 import searchIcon from "../Images/Pokedex/search.png";
@@ -12,17 +12,18 @@ import { UserContext } from "../Components/Context/UserProvider";
 
 const Pokedex = () => {
   const { user, setUser } = useContext(UserContext);
-  const stored = localStorage.getItem('users')
-  stored.username ? setUser(setUser(stored.username)):
-  console.log('Welcome',user.username)
+  const stored = localStorage.getItem("users");
+  stored.username
+    ? setUser(setUser(stored.username))
+    : console.log("Welcome", user.username);
 
   // useEffect(()=>{
   //   setUser(JSON.parse(localStorage.getItem('users')))
   // console.log('hello!'+user.username)
   // },[setUser,user])
 
-  const [resdata, setData] = useState([]); // with the help of query this is not used thats the adantage
-  const [load, setLoad] = useState(true); // with the help of query this is not used thats the adantage
+  // const [resdata, setData] = useState([]); // with the help of query this is not used thats the adantage
+  // const [load, setLoad] = useState(true); // with the help of query this is not used thats the adantage
   const [searchPara, setSearchPara] = useState({ Name: "", Type: "" });
 
   // const fetchData = async() =>{
@@ -37,7 +38,7 @@ const Pokedex = () => {
   //   }
   // }
 
-  const { data } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: "users",
     queryFn: async () => {
       const results = await axios.get(
@@ -59,6 +60,7 @@ const Pokedex = () => {
     },
   });
   console.log(data);
+  console.log(isLoading);
   // setData(data)
   // setLoad(!isSuccess)
   // if(error) console.log(error)
@@ -137,10 +139,12 @@ const Pokedex = () => {
       {/* list of pokemon */}
 
       <div className=" p-10 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 text-black font-kanit">
-        {!data ? (
+        {isLoading ? (
           <div className="flex relative justify-center">
             <RingLoader color="white" />
           </div>
+        ) : isError ? (
+          <p>Something went wrong</p>
         ) : (
           filteredData?.map((item, index) => (
             <div
